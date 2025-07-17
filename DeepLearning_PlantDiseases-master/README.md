@@ -1,105 +1,50 @@
-# Deep Learning for the plant disease detection
+# Deep Learning & Traditional ML for Plant Disease Classification
 
-This is the source code of the experiment described in chapter [Deep Learning for Plant Diseases: Detection and Saliency Map Visualisation](https://link.springer.com/chapter/10.1007/978-3-319-90403-0_6) in a book **Human and Machine Learning, 2018**.
+This project compares deep learning (CNN) and traditional machine learning (SVM, K-NN) approaches for classifying plant diseases using leaf images. It includes training, evaluation, visualization, and an interactive UI for predictions.
 
-Training and evaluating state-of-the-art deep architectures for plant disease classification task using pyTorch. <br/>
-Models are trained on the preprocessed dataset which can be downloaded [here](https://drive.google.com/file/d/0B_voCy5O5sXMTFByemhpZllYREU/view?usp=sharing&resourcekey=0-25uoBK9YYXXKnTliopPxDw).<br/>
-Dataset is consisted of **38** disease classes from [PlantVillage](https://plantvillage.org/) dataset and **1** background class from Stanford's open dataset of background images - [DAGS](http://dags.stanford.edu/projects/scenedataset.html).
-<br/>
-**80%** of the dataset is used for training and **20%** for validation.
+## Project Structure
+- **Scripts/train.py**: Main script for training and evaluating CNN, SVM, and K-NN models on the PlantVillage dataset. Includes functions for training, evaluation, plotting metrics, and saving results.
+- **Scripts/plant_ui.py**: Interactive Gradio web app for plant disease prediction. Users can upload leaf images and select a model for prediction.
+- **Scripts/kaggle.py**: Training and evaluation on a Kaggle houseplant dataset (healthy vs. wilted). Demonstrates binary classification and model comparison.
+- **Scripts/CNN_Healthy_Classification_Visualization.py**: Visualizes the step-by-step process of CNN classification using diagrams.
+- **Scripts/feature_extraction_visualization.py**: Shows how features are extracted for SVM/K-NN (flattened vectors) and CNN (feature maps).
+- **Scripts/Visualize2.py**: Animates CNN feature maps for a sample image, helping to understand filter activations.
+- **Scripts/Visualize.py**: Compares CNN activations for healthy and diseased leaves, visualizing differences in learned features.
+- **Scripts/visualize_training_process.py**: Plots training curves (loss, F1-score) and schematic diagrams for all models, illustrating the training workflow.
+- **Scripts/visualize_preprocessing.py**: Visualizes image preprocessing steps for each model, showing how input images are transformed.
 
-## Usage:
- 1. Train all the models with **train.py** and store the evaluation stats in **stats.csv**:
- `python3 train.py`
- 2. Plot the models' results for every archetecture based on the stored stats with **plot.py**:
- `python3 plot.py`
- 
- ## Results:
-The models on the graph were retrained on final fully connected layers only - **shallow**, for the entire set of parameters - **deep** or from its initialized state - **from scratch**. 
+## Dataset
+- **PlantVillage**: Contains images of plant leaves categorized by disease type. Split into `train` and `val` folders for training and validation.
+- **Kaggle houseplant dataset**: Used for binary classification (healthy vs. wilted).
 
- | Model        | Training type |Training time [~h] | Accuracy Top 1|
-| ------------- |:-------------:|:-----------------:|:-------------:|
-| AlexNet       | shallow       |    0.87           |   0.9415      |  
-| AlexNet       | from scratch  |    1.05           |   0.9578      |  
-| AlexNet       | deep          |    1.05           |   0.9924      |
-| **DenseNet169**   | **shallow**       |    **1.57**           |   **0.9653**      |    
-| **DenseNet169**   | **from scratch**  |    **3.16**           |   **0.9886**      |
-| DenseNet169   | deep          |    3.16           |   0.9972      |
-| Inception_v3  | shallow       |    3.63           |   0.9153      |
-| Inception_v3  | from scratch  |    5.91           |   0.9743      |
-| **Inception_v3**| **deep**      |    **5.64**           |   **0.9976**  |
-| ResNet34      | shallow       |    1.13           |   0.9475      |
-| ResNet34      | from scratch  |    1.88           |   0.9848      |
-| ResNet34      | deep          |    1.88           |   0.9967      |
-| Squeezenet1_1 | shallow       |    0.85           |   0.9626      |
-| Squeezenet1_1 | from scratch  |    1.05           |   0.9249      |
-| Squeezenet1_1 | deep          |    2.10           |   0.992       |
-| VGG13         | shallow       |    1.49           |   0.9223      |
-| VGG13         | from scratch  |    3.55           |   0.9795      |
-| VGG13         | deep          |    3.55           |   0.9949      |
+## How to Run
+1. Place the PlantVillage dataset in the correct directory (`PlantVillage/PlantVillage/train` and `val`).
+2. Run `train.py` to train and evaluate all models. Results and trained models will be saved in the project folder.
+3. Use `plant_ui.py` to launch the interactive prediction interface. Upload a leaf image and select a model to get predictions.
+4. Explore visualization scripts to gain insights into model behavior, feature extraction, and training dynamics.
 
-**NOTE**: All the others results are stored in [stats.csv](https://github.com/MarkoArsenovic/DeepLearning_PlantDiseases/blob/master/Results/stats.csv) 
-## Graph
-![Results](https://github.com/MarkoArsenovic/DeepLearning_PlantDiseases/blob/master/Results/results.png "Results")
+## Key Features
+- End-to-end training and evaluation of CNN, SVM, and K-NN models.
+- Visual comparison of model performance (F1-score, accuracy, precision, recall) using plots and confusion matrices.
+- Feature extraction and activation visualizations to understand how models process images.
+- Interactive UI for real-time plant disease predictions.
+- Support for both multiclass (PlantVillage) and binary (Kaggle) classification tasks.
 
-## Visualization Experiments
+## Requirements
+- Python 3.8+
+- PyTorch, torchvision, scikit-learn, matplotlib, PIL, gradio
+- Download PlantVillage dataset and place in the specified directory structure.
 
-**@Contributor**: [Brahimi Mohamed](mailto:m_brahimi@esi.dz)
+## Results & Analysis
+- The project provides a detailed comparison of deep learning and traditional ML for plant disease classification.
+- CNN (ResNet34) typically achieves higher accuracy and F1-score compared to SVM and K-NN, especially on complex multiclass tasks.
+- Visualizations help explain how CNNs learn features and how traditional ML relies on raw pixel data.
+- All results, metrics, and visualizations are saved for reporting and presentation.
 
-## Prerequisites:
-
-Train the new model or download pretrained models on **10 classes** of **Tomato** from PlantVillage dataset: [AlexNet](https://drive.google.com/open?id=1Ms1Ri5DUy_D4uYZX5tG2hrN2hUH6XbQS) or [VGG13](https://drive.google.com/open?id=1f0nPNRfL42fJA8tF5JoKUKv0Xr98p8-P).
-
-## Occlusion Experiment
-
-Occlusion experiments for producing the heat maps that show visually the influence of each region on the classification.
-
-### Usage:
-
-Produce the heat map and plot with  **occlusion.py** and store the visualizations in **output_dir**:
- 
- `python3 occlusion.py /path/to/dataset /path/to/output_dir model_name.pkl /path/to/image disease_name`
- 
- ### Visualization Examples on AlexNet:
-![Early Blight ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output/early_blight/early_blight.png)
-*Early blight - original, size 80 stride 10, size 100 stride 10*
-![Late Blight ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output/late_blight/late_blight.png)
-*Late blight - original, size 80 stride 10, size 100 stride 10*
-![Septoria Leaf Spot ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output/septoria_leaf_spot/septoria_leaf_spot.png)
-*Septoria leaf spot - original, size 50 stride 10, size 100 stride 10*
-
-## Saliency Map Experiment
-
-Saliency map is an analytical method that allows to estimate theimportance of each pixel, using only one forward and one backward pass through the network.
-
-### Usage:
-
-Produce the visualization and plot with  **saliency.py** and store the visualizations in **output_dir**:
- 
- `python3 occlusion.py /path/to/model /path/to/dataset /path/to/image class_name`
- 
-  ### Visualization Examples on VGG13:
-
-![Early Blight ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output_saliency/early%20blight/early_blight.jpg)
-*Early blight - Original, Naive backpropagation , Guided backpropagation*
-![Late Blight ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output_saliency/late%20blight/late_blight.jpg)
-*Late blight - Original, Naive backpropagation , Guided backpropagation*
-![Septoria Leaf Spot ](https://raw.githubusercontent.com/MarkoArsenovic/DeepLearning_PlantDiseases/master/Scripts/visualization/output_saliency/septoria/septoria.jpg)
-*Septoria leaf spot - Original, Naive backpropagation , Guided backpropagation*
+## Usage Scenarios
+- Academic research and benchmarking of ML models for plant disease detection.
+- Educational demonstrations of deep learning vs. traditional ML.
+- Practical tool for farmers or researchers to identify plant diseases from leaf images.
 
 ---
-
-NOTE: When using (any part) of this repository, please cite  [Deep Learning for Plant Diseases: Detection and Saliency Map Visualisation](https://link.springer.com/chapter/10.1007/978-3-319-90403-0_6):
-
-```
-@Inbook{Brahimi2018,
-  author     = "Brahimi, Mohammed and Arsenovic, Marko and Laraba, Sohaib and Sladojevic, Srdjan and Boukhalfa, Kamel and Moussaoui, Abdelouhab",
-  editor     = "Zhou, Jianlong and Chen, Fang",
-  title      = "Deep Learning for Plant Diseases: Detection and Saliency Map Visualisation",
-  bookTitle  = "Human and Machine Learning: Visible, Explainable, Trustworthy and Transparent", year="2018",
-  publisher  = "Springer International Publishing",
-  address    = "Cham",
-  pages      = "93--117",
-  url        = "https://doi.org/10.1007/978-3-319-90403-0_6"
-}
-```
+For more details, see the code comments and individual script files.
