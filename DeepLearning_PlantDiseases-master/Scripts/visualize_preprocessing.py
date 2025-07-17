@@ -59,7 +59,7 @@ plt.suptitle("Image Before and After Preprocessing (CNN & SVM/K-NN)")
 plt.tight_layout()
 plt.show()
 
-# --- CNN feature extraction visualization (optional, uncomment to use) ---
+# --- CNN feature extraction visualization () ---
 # import torchvision.models as models
 # transform_cnn = transforms.Compose([
 #     transforms.Resize((224, 224)),
